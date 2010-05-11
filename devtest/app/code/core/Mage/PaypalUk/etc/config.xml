@@ -1,0 +1,174 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    Mage
+ * @package     Mage_PaypalUk
+ * @copyright   Copyright (c) 2009 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+-->
+<config>
+    <modules>
+        <Mage_PaypalUk>
+            <version>0.7.0</version>
+        </Mage_PaypalUk>
+    </modules>
+
+    <global>
+        <models>
+            <paypaluk>
+                <class>Mage_PaypalUk_Model</class>
+                <resourceModel>paypaluk_mysql4</resourceModel>
+            </paypaluk>
+            <paypaluk_mysql4>
+                <class>Mage_PaypalUk_Model_Mysql4</class>
+                <entities>
+                    <api_debug><table>paypaluk_api_debug</table></api_debug>
+                </entities>
+            </paypaluk_mysql4>
+        </models>
+        <helpers>
+            <paypaluk>
+                <class>Mage_PaypalUk_Helper</class>
+            </paypaluk>
+        </helpers>
+        <resources>
+            <paypaluk_setup>
+                <setup>
+                    <module>Mage_PaypalUk</module>
+                </setup>
+            </paypaluk_setup>
+        </resources>
+        <blocks>
+            <paypaluk><class>Mage_PaypalUk_Block</class></paypaluk>
+        </blocks>
+        <sales>
+            <order>
+                <statuses>
+                    <pending_paypal translate="label"><label>Pending PayPal</label></pending_paypal>
+                </statuses>
+                <states>
+                    <pending_payment>
+                        <statuses>
+                            <pending_paypal/>
+                        </statuses>
+                    </pending_payment>
+                </states>
+            </order>
+        </sales>
+    </global>
+    <frontend>
+        <secure_url>
+            <paypaluk_express>/paypaluk/express</paypaluk_express>
+        </secure_url>
+        <routers>
+            <paypaluk>
+                <use>standard</use>
+                <args>
+                    <module>Mage_PaypalUk</module>
+                    <frontName>paypaluk</frontName>
+                </args>
+            </paypaluk>
+        </routers>
+        <translate>
+            <modules>
+                <Mage_PaypalUk>
+                    <files>
+                        <default>Mage_PaypalUk.csv</default>
+                    </files>
+                </Mage_PaypalUk>
+            </modules>
+        </translate>
+        <layout>
+            <updates>
+                <paypaluk>
+                    <file>paypaluk.xml</file>
+                </paypaluk>
+            </updates>
+        </layout>
+    </frontend>
+    <adminhtml>
+        <layout>
+            <updates>
+                <paypaluk>
+                    <file>paypaluk.xml</file>
+                </paypaluk>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Mage_PaypalUk>
+                    <files>
+                        <default>Mage_PaypalUk.csv</default>
+                    </files>
+                </Mage_PaypalUk>
+            </modules>
+        </translate>
+    </adminhtml>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Mage_PaypalUk before="Mage_Adminhtml">Mage_PaypalUk_Adminhtml</Mage_PaypalUk>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <default>
+        <paypal>
+            <wpuk>
+                <url>https://pilot-payflowpro.verisign.com/transaction</url>
+                <partner>PayPalUK</partner>
+                <user backend_model="adminhtml/system_config_backend_encrypted"/>
+                <pwd backend_model="adminhtml/system_config_backend_encrypted"/>
+                <paypal_hdrimg></paypal_hdrimg>
+                <paypal_hdrbordercolor></paypal_hdrbordercolor>
+                <paypal_hdrbackcolor></paypal_hdrbackcolor>
+                <paypal_payflowcolor></paypal_payflowcolor>
+            </wpuk>
+        </paypal>
+        <payment>
+            <paypaluk_express translate="title">
+                <model>paypaluk/express</model>
+                <title>PayPal</title>
+                <allowspecific>0</allowspecific>
+                <line_item>1</line_item>
+                <payment_action>Sale</payment_action><!-- Don't add to translation -->
+            </paypaluk_express>
+            <paypaluk_direct translate="title">
+                <payment_action>Sale</payment_action><!-- Don't add to translation -->
+                <model>paypaluk/direct</model>
+                <title>Debit or Credit Card</title>
+                <cctypes>AE,VI,MC,DI,SS</cctypes>
+                <allowspecific>0</allowspecific>
+                <centinel>0</centinel>
+                <centinel_processor_id></centinel_processor_id>
+                <centinel_merchant_id></centinel_merchant_id>
+                <centinel_password></centinel_password>
+                <centinel_maps_url>https://centineltest.cardinalcommerce.com/maps/txns.asp</centinel_maps_url>
+                <centinel_timeout_connect>100</centinel_timeout_connect>
+                <centinel_timeout_read>100</centinel_timeout_read>
+            </paypaluk_direct>
+        </payment>
+    </default>
+</config>
